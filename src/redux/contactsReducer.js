@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getContacts, addContact, removeContact } from './tasksSlice.js';
+import { getContacts, addContact, removeContact } from './operations.js';
 
 export const contactsSlice = createSlice({
   name: 'contacts',
@@ -30,15 +30,15 @@ export const contactsSlice = createSlice({
         state.contacts = actions.payload.map(con => ({
           id: con.id,
           name: con.name,
-          phone: con.phone,
+          number: con.number,
         }));
       })
       .addCase(addContact.pending, pending)
       .addCase(addContact.rejected, rejected)
       .addCase(addContact.fulfilled, (state, action) => {
         state.isLoading = false;
-        const { name, phone, id } = action.payload;
-        state.contacts = [...state.contacts, { name, phone, id }];
+        const { name, number, id } = action.payload;
+        state.contacts = [...state.contacts, { name, number, id }];
       })
       .addCase(removeContact.pending, pending)
       .addCase(removeContact.rejected, rejected)
